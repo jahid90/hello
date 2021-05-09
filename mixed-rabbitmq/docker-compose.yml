@@ -1,0 +1,33 @@
+version: '3'
+
+networks:
+  default:
+    external:
+      name: home-network
+
+services:
+  producer-java:
+    build: ./java
+    image: rabbitmq-java:local
+    container_name: producer-java
+    restart: unless-stopped
+    command: ["java", "-Dspring.profiles.active=producer", "-jar", "app.jar"]
+  producer-js:
+    build: ./js
+    image: rabbitmq-js:local
+    # container_name: producer-js
+    restart: unless-stopped
+    command: ["yarn", "produce"]
+  consumer-java:
+    build: ./java
+    image: rabbitmq-java:local
+    container_name: consumer-java
+    restart: unless-stopped
+    command: ["java", "-Dspring.profiles.active=consumer", "-jar", "app.jar"]
+  consumer-js:
+    build: ./js
+    image: rabbitmq-js:local
+    # container_name: consumer-js
+    restart: unless-stopped
+    command: ["yarn", "consume"]
+

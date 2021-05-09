@@ -1,9 +1,11 @@
 package io.jahiduls.rabbitmq;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+@Profile("producer")
 @Service
 public class Producer {
 
