@@ -12,9 +12,12 @@ amqp.connect('amqp://rabbitmq.jahiduls.io/playground')
                 console.info(`Prodcing messages to queue <${queue}>. Press Ctrl+C to exit.`);
                 let count = 1;
                 setInterval(() => {
-                    const message = `Hello World from JS RabbitMQ! - ${count++}`;
-                    console.info(` [x] Sending <${message}>`);
-                    return channel.sendToQueue(queue, Buffer.from(message));
+                    const message = {
+                        message: 'Hello World from JS RabbitMQ!',
+                        priority: count++
+                    };
+                    console.info(` [x] Sending <${JSON.stringify(message)}>`);
+                    return channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)));
                 }, 1000);
             });
     })

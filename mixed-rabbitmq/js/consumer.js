@@ -11,7 +11,7 @@ amqp.connect('amqp://rabbitmq.jahiduls.io/playground')
             .then((ok) => {
                 console.info(`Listening for messages on queue <${queue}>. Press Ctrl+C to exit.`);
                 return channel.consume(queue, (msg) => {
-                    console.info(` [x] Received <${msg.content.toString()}>`);
+                    console.info(` [x] Received <${JSON.stringify(JSON.parse(msg.content))}>`);
                     channel.ack(msg);
                 });
             });
