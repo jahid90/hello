@@ -1,11 +1,13 @@
 package io.jahiduls.rabbitmq;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Profile("producer")
+@Slf4j
 @Service
 public class Producer {
 
@@ -21,10 +23,13 @@ public class Producer {
 
     @Scheduled(fixedDelay = 1000L)
     public void sendMessage() {
-        final CustomMessage message = new CustomMessage();
-        message.priority = count++;
-        message.message = "Hello from Java RabbitMQ!";
-        System.out.println(" [x] Sending <" + message + ">");
+
+        final CustomMessage message = CustomMessage.builder()
+                .message("Hello from Spring RabbitMQ!")
+                .priority(count++).
+                        build();
+
+        log.info(" [x] Sending <{}>", message);
         rabbitTemplate.convertAndSend("", QUEUE_NAME, message);
     }
 

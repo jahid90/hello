@@ -1,17 +1,18 @@
 package io.jahiduls.rabbitmq;
 
-import org.springframework.amqp.core.Message;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 @Profile("consumer")
+@Slf4j
 @Service
 public class Consumer {
 
     @RabbitListener(queues = AppConfig.QUEUE)
     public void receiveMessage(final CustomMessage message) {
-        System.out.println(" [x] Received <" + message + ">");
+        log.info(" [x] Received <{}>", message);
     }
 
 }
