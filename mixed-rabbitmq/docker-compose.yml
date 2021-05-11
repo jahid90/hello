@@ -15,6 +15,7 @@ services:
   producer-js:
     build: ./js
     image: rabbitmq-js:local
+    # Can't name containers to use the scale command -> $ docker-compose up -d --scale producer-js=4
     # container_name: producer-js
     restart: unless-stopped
     command: ["yarn", "produce"]
