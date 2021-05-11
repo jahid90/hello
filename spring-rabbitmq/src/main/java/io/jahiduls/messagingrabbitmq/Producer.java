@@ -19,8 +19,10 @@ public class Producer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
         System.out.println(" [x] Sending message...");
-        rabbitTemplate.convertAndSend(MessagingRabbitmqApplication.topicExchangeName, "foo.bar.baz", "Hello from Spring RabbitMQ!");
+        rabbitTemplate.convertAndSend(MessagingRabbitmqApplication.TOPIC_EXCHANGE_NAME, "foo.bar.baz", "Hello from Spring RabbitMQ!");
+
         consumer.getLatch().await(10000, TimeUnit.MILLISECONDS);
     }
 }
