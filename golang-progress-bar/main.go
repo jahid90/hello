@@ -58,13 +58,13 @@ func (p *ProgressBar) update() {
 
 	fmt.Print("[")
 	for i := 0; i < completedWidth; i++ {
-		fmt.Print("#")
+		fmt.Print("=")
 	}
 	if !p.completed {
 		fmt.Printf("\b>")
 	}
 	for i := 0; i < remaining; i++ {
-		fmt.Print(" ")
+		fmt.Print("-")
 	}
 	fmt.Printf("] %3d/%d %s", p.current, p.total, p.units)
 
