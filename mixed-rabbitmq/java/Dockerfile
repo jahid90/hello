@@ -1,4 +1,4 @@
-FROM adoptopenjdk:16-jre
+FROM adoptopenjdk:16-jre-openj9
 
 WORKDIR /app
 

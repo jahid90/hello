@@ -1,9 +1,9 @@
 version: '3'
 
 networks:
-  default:
-    external:
-      name: home-network
+  rabbitmq:
+    name: rabbitmq
+    driver: bridge
 
 services:
   producer-java:
@@ -12,6 +12,8 @@ services:
     container_name: producer-java
     restart: unless-stopped
     command: ["java", "-Dspring.profiles.active=producer", "-jar", "app.jar"]
+    networks:
+      - rabbitmq
   producer-js:
     build: ./js
     image: rabbitmq-js:local
@@ -19,16 +21,22 @@ services:
     # container_name: producer-js
     restart: unless-stopped
     command: ["yarn", "produce"]
+    networks:
+      - rabbitmq
   consumer-java:
     build: ./java
     image: rabbitmq-java:local
     container_name: consumer-java
     restart: unless-stopped
     command: ["java", "-Dspring.profiles.active=consumer", "-jar", "app.jar"]
+    networks:
+      - rabbitmq
   consumer-js:
     build: ./js
     image: rabbitmq-js:local
     # container_name: consumer-js
     restart: unless-stopped
     command: ["yarn", "consume"]
+    networks:
+      - rabbitmq
 
