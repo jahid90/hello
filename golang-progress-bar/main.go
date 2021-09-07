@@ -15,6 +15,8 @@ type ProgressBar struct {
 	completed   bool
 	units       string
 	refreshRate time.Duration
+	begin       time.Time
+	end         time.Time
 }
 
 func NewProgressBar(total int, units string) *ProgressBar {
@@ -30,6 +32,8 @@ func NewProgressBar(total int, units string) *ProgressBar {
 
 func (p *ProgressBar) start(tick chan int) {
 
+	p.begin = time.Now()
+
 	go func() {
 		for range tick {
 			p.current = p.current + 1
@@ -40,6 +44,8 @@ func (p *ProgressBar) start(tick chan int) {
 
 		if p.current >= p.total {
 			p.completed = true
+
+			p.end = time.Now()
 		}
 
 		p.update()
@@ -67,6 +73,10 @@ func (p *ProgressBar) update() {
 		fmt.Print("-")
 	}
 	fmt.Printf("] %3d/%d %s", p.current, p.total, p.units)
+
+	if p.completed {
+		fmt.Printf(" took %s", time.Duration(p.end.Sub(p.begin)).Round(time.Millisecond).String())
+	}
 
 	time.Sleep(p.refreshRate)
 
