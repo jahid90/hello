@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"strconv"
 	"sync"
 	"time"
 )
@@ -13,7 +15,6 @@ type ProgressBar struct {
 	completed   bool
 	units       string
 	refreshRate time.Duration
-	mu          sync.Mutex
 }
 
 func NewProgressBar(total int, units string) *ProgressBar {
@@ -24,7 +25,6 @@ func NewProgressBar(total int, units string) *ProgressBar {
 		completed:   false,
 		units:       units,
 		refreshRate: 100 * time.Millisecond,
-		mu:          sync.Mutex{},
 	}
 }
 
@@ -32,18 +32,14 @@ func (p *ProgressBar) start(tick chan int) {
 
 	go func() {
 		for range tick {
-			p.mu.Lock()
 			p.current = p.current + 1
-			p.mu.Unlock()
 		}
 	}()
 
 	for !p.completed {
 
 		if p.current >= p.total {
-			p.mu.Lock()
 			p.completed = true
-			p.mu.Unlock()
 		}
 
 		p.update()
@@ -77,6 +73,15 @@ func (p *ProgressBar) update() {
 }
 
 func main() {
+
+	delay := 50 * time.Millisecond
+	if len(os.Args) > 1 {
+		d, err := strconv.Atoi(os.Args[1])
+		if err == nil {
+			delay = time.Duration(d * int(time.Millisecond))
+		}
+	}
+
 	wg := sync.WaitGroup{}
 	wg.Add(1)
 	tick := make(chan int)
@@ -90,7 +95,7 @@ func main() {
 
 	for p.current < p.total {
 		tick <- 1
-		time.Sleep(50 * time.Millisecond)
+		time.Sleep(delay)
 	}
 
 	wg.Wait()
