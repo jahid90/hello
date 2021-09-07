@@ -70,7 +70,7 @@ func (p *ProgressBar) update() {
 	for i := 0; i < remaining; i++ {
 		fmt.Print(" ")
 	}
-	fmt.Printf("] %d/%d %s", p.current, p.total, p.units)
+	fmt.Printf("] %3d/%d %s", p.current, p.total, p.units)
 
 	time.Sleep(p.refreshRate)
 
