@@ -1,0 +1,5 @@
+version: 5
+commands:
+  - alias: build
+    command: go build -o server
+
