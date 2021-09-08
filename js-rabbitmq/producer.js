@@ -13,14 +13,19 @@ amqp.connect('amqp://rabbitmq.jahiduls.io/playground', (connErr, conn) => {
 
         channel.assertQueue(queue, {
             durable: false
+        }, (err, ok) => {
+            if (err) throw err;
+
+            console.info(` [*] Assert queue: ${JSON.stringify(ok)}`);
+            console.log(` [*] Producing messages to queue: ${queue}`);
+
+            channel.sendToQueue(queue, Buffer.from(message));
+            console.log(` [-] sent ${message}`);
+
+            setTimeout(() => {
+                conn.close();
+                process.exit(0);
+            }, 500);
         });
-
-        channel.sendToQueue(queue, Buffer.from(message));
-        console.log(` [x] sent ${message}`);
-
-        setTimeout(() => {
-            conn.close();
-            process.exit(0);
-        }, 500);
     });
 });

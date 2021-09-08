@@ -13,13 +13,17 @@ amqp.connect('amqp://rabbitmq.jahiduls.io/playground', (connErr, conn) => {
 
         channel.assertQueue(queue, {
             durable: false
-        });
+        }, (err, ok) => {
+            if (err) throw err;
 
-        console.log(` [*] Waiting for message in queue: ${queue}. To EXIT, press Ctrl+C`);
-        channel.consume(queue, (message) => {
-            console.log(` [x] Received ${message.content.toString()}`);
-        } , {
-            noAck: true
+            console.info(` [*] Assert queue: ${JSON.stringify(ok)}`);
+            console.log(` [*] Waiting for message in queue: ${queue}. To EXIT, press Ctrl+C`);
+
+            channel.consume(queue, (message) => {
+                console.log(` [+] Received ${message.content.toString()}`);
+            } , {
+                noAck: true
+            });
         });
 
     });
