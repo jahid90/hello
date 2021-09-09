@@ -7,6 +7,7 @@ specifiers:
   react: ^17.0.2
   react-dom: ^17.0.2
   react-scripts: 4.0.3
+  react-web-component: ^2.0.2
   web-vitals: ^1.0.1
 
 dependencies:
@@ -16,6 +17,7 @@ dependencies:
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-scripts: 4.0.3_react@17.0.2
+  react-web-component: 2.0.2_react-dom@17.0.2+react@17.0.2
   web-vitals: 1.1.2
 
 packages:
@@ -2560,6 +2562,14 @@ packages:
       '@webassemblyjs/ast': 1.9.0
       '@webassemblyjs/wast-parser': 1.9.0
       '@xtuc/long': 4.2.2
+    dev: false
+
+  /@webcomponents/custom-elements/1.5.0:
+    resolution: {integrity: sha512-c+7jPQCs9h/BYVcZ2Kna/3tsl3A/9EyXfvWjp5RiTDm1OpTcbZaCa1z4RNcTe/hUtXaqn64JjNW1yrWT+rZ8gg==}
+    dev: false
+
+  /@webcomponents/shadydom/1.9.0:
+    resolution: {integrity: sha512-1VoziSoBBsuGM3gk2nlOgLYOQLT9iG5s9ud6CxpdkYxJyGl3YWIVCsRPCXpJpdYp4/8ACkVcuD6GajRtIoJm1w==}
     dev: false
 
   /@xtuc/ieee754/1.2.0:
@@ -9532,6 +9542,23 @@ packages:
       - webpack-command
       - webpack-hot-middleware
       - webpack-plugin-serve
+    dev: false
+
+  /react-shadow-dom-retarget-events/1.1.0:
+    resolution: {integrity: sha512-hI/naZ8fUARf5He4PpvQtqhs/VWoocfg3ULeCOE3ccWiXGEsFpshlx2iB1XNtm2SFDdvZYoSo25a8JViYdAcgQ==}
+    dev: false
+
+  /react-web-component/2.0.2_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-ewk1QPaeHEsymOH8H2AvY7tBjYDehE9+6af49bFzdsxONwaDqvu7wuDe9anFuJs5OQKvlKpWJ9psU+g8P730Vw==}
+    peerDependencies:
+      react: ^16.2.0
+      react-dom: ^16.2.0
+    dependencies:
+      '@webcomponents/custom-elements': 1.5.0
+      '@webcomponents/shadydom': 1.9.0
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-shadow-dom-retarget-events: 1.1.0
     dev: false
 
   /react/17.0.2:
