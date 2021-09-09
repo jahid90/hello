@@ -35,5 +35,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "css-loader": "^6.2.0",
+    "react-web-component-style-loader": "^0.1.4-alpha"
   }
 }
