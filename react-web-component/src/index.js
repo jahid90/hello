@@ -1,12 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactWebComponent from 'react-web-component';
 
 import './index.css';
 import App from './App';
 
-ReactDOM.render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>,
-    document.getElementById('root')
-);
+ReactWebComponent.create(<React.StrictMode><App /></React.StrictMode>, 'my-todos');
