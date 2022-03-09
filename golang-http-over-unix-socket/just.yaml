@@ -8,6 +8,11 @@ commands:
         run: go build -o client client/client.go
       - name: Build server
         run: go build -o server server/server.go
+  clean:
+    description: Remove generated binary files
+    steps:
+      - run: rm client/client
+      - run: rm server/server
   start:server:
     description: Start the server
     steps:
