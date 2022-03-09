@@ -1,0 +1,18 @@
+version: 6
+variables:
+commands:
+  build:
+    description: Build the server and the client
+    steps:
+      - name: Build client
+        run: go build -o client client/client.go
+      - name: Build server
+        run: go build -o server server/server.go
+  start:server:
+    description: Start the server
+    steps:
+      - run: go run server/server.go /tmp/http.sock www
+  run:client:
+    description: Make a get request
+    steps:
+      - run: go run client/client.go /tmp/http.sock /
