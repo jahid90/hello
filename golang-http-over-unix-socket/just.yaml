@@ -1,5 +1,6 @@
 version: 6
 variables:
+  socket: /tmp/http.sock
 commands:
   build:
     description: Build the server and the client
@@ -16,8 +17,9 @@ commands:
   start:server:
     description: Start the server
     steps:
-      - run: go run server/server.go /tmp/http.sock www
+      - run: go run server/server.go {{ .socket }} www
   run:client:
     description: Make a get request
     steps:
-      - run: go run client/client.go /tmp/http.sock /
+      - run: go run client/client.go {{ .socket }} /
+
