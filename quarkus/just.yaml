@@ -1,0 +1,31 @@
+version: 6
+variables:
+  registryName: registry.jahiduls.mint
+  imageName: quarkus-hello:current
+commands:
+  ctr:build:
+    description: Build a container image
+    steps:
+      - run: ./gradlew clean build -Dquarkus.package.type=mutable-jar
+      - run: docker build -f src/main/docker/Dockerfile.jvm -t {{ .registryName }}/{{ .imageName }} .
+  ctr:run:
+    description: Run a container image
+    steps:
+      - run: docker run -i --rm -p 8080:8080 -p 5005:5005 -e QUARKUS_LAUNCH_DEVMODE=true {{ .registryName }}/{{ .imageName }}
+  ctr:build:native:
+    description: Build a native container image
+    steps:
+      - run: quarkus build --native
+      - run: docker build -f src/main/docker/Dockerfile.native -t {{ .registryName }}/{{ .imageName }} .
+  ctr:run:native:
+    description: Run anative container image
+    steps:
+      - run: docker run -i --rm -p 8080:8080 {{ .registryName }}/{{ .imageName }}
+  q:dev:
+    description: Launch quarkus in dev mode
+    steps:
+      - run: ./gradlew quarkusDev
+  q:dev:remote:
+    description: Launch quarkus in remote dev mode
+    steps:
+      - run: ./gradlew quarkusRemoteDev -Dquarkus.live-reload.url=http://localhost:8080
